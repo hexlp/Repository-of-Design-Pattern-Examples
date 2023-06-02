@@ -42,7 +42,7 @@ Whether you are a beginner looking to learn design patterns or an experienced de
    - Private Class Data Pattern
    - Marker Interface Pattern
    
-# 3. Behavioral Patterns:
+### 3. Behavioral Patterns:
    - Observer Pattern
    - Strategy Pattern
    - Command Pattern
