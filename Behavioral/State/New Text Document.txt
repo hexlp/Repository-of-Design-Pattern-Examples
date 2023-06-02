@@ -1,0 +1,17 @@
+class LoggedOutState : public AuthenticationState {
+public:
+    void login() override;
+    void logout() override;
+};
+
+class LoggingInState : public AuthenticationState {
+public:
+    void login() override;
+    void logout() override;
+};
+
+class LoggedInState : public AuthenticationState {
+public:
+    void login() override;
+    void logout() override;
+};
