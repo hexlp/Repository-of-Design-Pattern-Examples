@@ -10,7 +10,7 @@ Whether you are a beginner looking to learn design patterns or an experienced de
 
 ## Pattern List:
 
-# 1. Creational Patterns:
+### 1. Creational Patterns:
    - Singleton Pattern
    - Factory Method Pattern
    - Abstract Factory Pattern
@@ -27,7 +27,7 @@ Whether you are a beginner looking to learn design patterns or an experienced de
    - Fluent Builder Pattern
    - Double-Checked Locking Pattern
           
-# 2. Structural Patterns:
+### 2. Structural Patterns:
    - Adapter Pattern
    - Decorator Pattern
    - Composite Pattern
@@ -64,7 +64,7 @@ Whether you are a beginner looking to learn design patterns or an experienced de
    - Half-Sync/Half-Async Pattern
    - Sentinel (Poison Pill) Pattern
         
-# 4. Architectural Patterns:
+### 4. Architectural Patterns:
    - Model-View-Controller (MVC) Pattern
    - Model-View-ViewModel (MVVM) Pattern
    - Repository Pattern
