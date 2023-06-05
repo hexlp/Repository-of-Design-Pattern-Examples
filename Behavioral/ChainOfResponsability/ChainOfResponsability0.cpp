@@ -1,3 +1,38 @@
+/*
+The Chain of Responsibility pattern is a behavioral design pattern that allows an 
+object to pass a request along a chain of potential handlers until the request is 
+handled or reaches the end of the chain. Each handler in the chain has the ability 
+to handle the request or pass it to the next handler in the chain.
+
+The key components of this pattern are:
+- Request: Represents a request to be processed. It contains the necessary 
+  information for the handlers to make a decision on how to handle it.
+  
+- Handler: Defines an interface for handling requests. It has a reference 
+  to the next handler in the chain and handles the request if it is capable of doing so.
+  Otherwise, it delegates the request to the next handler in the chain.
+  
+- Concrete Handlers: Implement the Handler interface and provide the actual 
+  implementation for handling the requests. Each concrete handler decides whether 
+  to handle the request or pass it to the next handler.
+
+The Chain of Responsibility pattern promotes loose coupling between the sender 
+of a request and its receivers. It allows multiple objects to have a chance to 
+handle the request without the sender having knowledge of the specific handlers 
+or their order in the chain. It also provides flexibility in dynamically changing 
+the chain of handlers during runtime.
+
+This pattern is commonly used in scenarios where a request needs to be processed 
+by multiple objects in a predefined order, and the specific handler for a request 
+may vary based on the runtime conditions or the nature of the request itself. 
+Examples include request handling pipelines, event handling systems, and logging systems with different log levels.
+
+The benefits of using the Chain of Responsibility pattern include improved flexibility, extensibility, and reusability of the code. 
+It enables the addition or removal of handlers without affecting the client code, and allows handlers to be reused in different chains or combinations.
+
+*/
+
+
 #include <iostream>
 #include <string>
 
