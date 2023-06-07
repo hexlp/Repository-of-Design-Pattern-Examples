@@ -36,8 +36,7 @@ Whether you are a beginner looking to learn design patterns or an experienced de
    - Bridge Pattern
    - Facade Pattern
    - Composite Entity Pattern
-   - Front Controller Pattern
-   - Module Pattern
+   - Front Controller Pattern   
    - Mirror Pattern
    - Private Class Data Pattern
    - Marker Interface Pattern
