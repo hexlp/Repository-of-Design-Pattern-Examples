@@ -63,10 +63,7 @@
    - Service Locator Pattern
    - Event-Driven Architecture (EDA)
    - Microservices Architecture
-   - Repository Pattern
-   - Data Access Object (DAO) Pattern
-
-  
+   - Repository Pattern 
 
 
 
