@@ -72,4 +72,3 @@ Whether you are a beginner looking to learn design patterns or an experienced de
    - Event-Driven Architecture (EDA)
    - Microservices Architecture
    - Repository Pattern
-   - Data Access Object (DAO) Pattern
