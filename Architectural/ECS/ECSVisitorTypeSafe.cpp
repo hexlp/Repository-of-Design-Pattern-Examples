@@ -1,4 +1,10 @@
- //Entity-Component System (ECS) 
+
+
+// This example shows how to use the visitor pattern to access components in an ECS system.
+// The visitor pattern is a way to separate an algorithm from an object structure on which it operates.
+// It allows you to add new operations to an object structure without modifying it.
+// It will take advantage of polymorphism to call the correct function for each object type still avoiding dynamic casts. 
+// Code complexity is increased, but it is a good solution for a large number of object types.
 
 #include <iostream>
 #include <unordered_map>
@@ -12,6 +18,16 @@ class Entity;
 class Component {
 public:
     virtual ~Component() = default;
+    virtual void Accept(class ComponentVisitor& visitor) = 0;
+};
+
+// Visitor interface
+class ComponentVisitor {
+public:
+    virtual ~ComponentVisitor() = default;
+    virtual void Visit(PositionComponent& component) = 0;
+    virtual void Visit(RenderComponent& component) = 0;
+    virtual void Visit(MovementComponent& component) = 0;
 };
 
 // Example components
@@ -20,6 +36,10 @@ public:
     float x, y;
 
     PositionComponent(float x, float y) : x(x), y(y) {}
+
+    void Accept(ComponentVisitor& visitor) override {
+        visitor.Visit(*this);
+    }
 };
 
 class RenderComponent : public Component {
@@ -27,6 +47,10 @@ public:
     std::string sprite;
 
     RenderComponent(const std::string& sprite) : sprite(sprite) {}
+
+    void Accept(ComponentVisitor& visitor) override {
+        visitor.Visit(*this);
+    }
 };
 
 class MovementComponent : public Component {
@@ -34,6 +58,10 @@ public:
     float speed;
 
     MovementComponent(float speed) : speed(speed) {}
+
+    void Accept(ComponentVisitor& visitor) override {
+        visitor.Visit(*this);
+    }
 };
 
 // Entity class
@@ -74,14 +102,31 @@ public:
         return component;
     }
 
-    // Get a component from an entity
+    // Use a visitor to get a component from an entity
     template <typename T>
-    T* GetComponent(Entity* entity) {
+    T* GetComponent(Entity* entity, ComponentVisitor& visitor) {
         auto it = entity->components.find(typeid(T).name());
         if (it != entity->components.end()) {
-            return dynamic_cast<T*>(it->second);
+            it->second->Accept(visitor);
+            return static_cast<T*>(it->second);
         }
         return nullptr;
+    }
+};
+
+// Concrete visitor implementation
+class PrintComponentVisitor : public ComponentVisitor {
+public:
+    void Visit(PositionComponent& component) override {
+        std::cout << "Position Component: (" << component.x << ", " << component.y << ")\n";
+    }
+
+    void Visit(RenderComponent& component) override {
+        std::cout << "Render Component: " << component.sprite << "\n";
+    }
+
+    void Visit(MovementComponent& component) override {
+        std::cout << "Movement Component: Speed " << component.speed << "\n";
     }
 };
 
@@ -99,16 +144,11 @@ int main() {
     ecs.AddComponent<RenderComponent>(enemy, "EnemySprite");
     ecs.AddComponent<MovementComponent>(enemy, 2.0f);
 
-    // Access and use components
-    PositionComponent* playerPosition = ecs.GetComponent<PositionComponent>(player);
-    if (playerPosition) {
-        std::cout << "Player Position: (" << playerPosition->x << ", " << playerPosition->y << ")\n";
-    }
+    // Access and use components using the visitor pattern
+    PrintComponentVisitor printVisitor;
 
-    RenderComponent* enemyRender = ecs.GetComponent<RenderComponent>(enemy);
-    if (enemyRender) {
-        std::cout << "Enemy Sprite: " << enemyRender->sprite << "\n";
-    }
+    PositionComponent* playerPosition = ecs.GetComponent<PositionComponent>(player, printVisitor);
+    RenderComponent* enemyRender = ecs.GetComponent<RenderComponent>(enemy, printVisitor);
 
     return 0;
 }
