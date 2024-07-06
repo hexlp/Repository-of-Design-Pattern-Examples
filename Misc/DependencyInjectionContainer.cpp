@@ -199,8 +199,8 @@ int main() {
 
     ServiceContainer container;
 
-     // Register services directly   
-    
+    // Register services directly       
+
     // Register service instance 
     auto printer = std::make_shared<Printer>();     
     printer->ink = "blue";    
@@ -209,6 +209,7 @@ int main() {
     // Register service type 
     container.registerService<Printer>("printer");                
 
+     // Register service type with interface
      container.registerService<ILogger, FileLogger>("fileLogger");    
      container.registerService<ILogger, ConsoleLogger>("consoleLogger");
      container.registerService<IEmailSender, EmailSender>("emailSender");
