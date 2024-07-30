@@ -97,9 +97,9 @@ class EventQueue {
 public:
     EventQueue() : running_(false) {}
 
-    void start() {
+    void start(EventHandler& handler) {
         running_ = true;
-        worker_thread_ = std::thread(&EventQueue::processEvents, this);
+        worker_thread_ = std::thread(&EventQueue::processEvents, this, std::ref(handler));
     }
 
     void stop() {
@@ -119,8 +119,7 @@ public:
     }
 
 private:
-    void processEvents() {
-        EventHandler handler;
+    void processEvents(EventHandler& handler) {
         while (running_) {
             std::unique_ptr<Event> event;
             {
@@ -143,14 +142,8 @@ private:
     std::thread worker_thread_;
 };
 
-// Example usage
 int main() {
     EventQueue queue;
-
-    // Start the event processing thread
-    queue.start();
-
-    // Create an EventHandler to register callbacks
     EventHandler handler;
 
     // Register callbacks for different event types
@@ -169,18 +162,15 @@ int main() {
         std::cout << "Window resized to " << resizeEvent.getWidth() << "x" << resizeEvent.getHeight() << "\n";
         });
 
+    // Start the event processing thread, passing the handler
+    queue.start(handler);
+
     // Simulate events occurring over time
     for (int i = 0; i < 5; ++i) {
-        // Push a MouseClick event
         queue.pushEvent(std::make_unique<MouseClickEvent>(i * 10, i * 20));
-
-        // Push a KeyPress event
         queue.pushEvent(std::make_unique<KeyPressEvent>('A' + i));
-
-        // Push a WindowResize event
         queue.pushEvent(std::make_unique<WindowResizeEvent>(800 + i * 10, 600 + i * 10));
 
-        // Sleep for a short time to simulate time passing
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
 
